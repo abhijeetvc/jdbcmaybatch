@@ -24,4 +24,31 @@ public class StudentImpl implements StudentRepo {
                 new BeanPropertyRowMapper<>(Student.class));
         return list;
     }
+
+    @Override
+    public Student getStudent(Integer id) {
+
+        String sql="select * from student where id=?";
+        Student s=jdbcTemplate.queryForObject(sql,new Object[]{id},
+                new BeanPropertyRowMapper<>(Student.class));
+        return s;
+    }
+
+    @Override
+    public String updateStudent(Integer id, String name) {
+
+        String sql="update student set name=? where id=?";
+
+        jdbcTemplate.update(sql,new Object[]{name,id});
+        return "Data updated";
+    }
+
+    @Override
+    public String saveData(Student student) {
+
+        String sql="insert into student values(?,?)";
+        jdbcTemplate.update(sql,new Object[]{student.getId(),student.getName()});
+        return "Data saved";
+    }
+
 }
