@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StudentImpl implements StudentRepo {
@@ -49,6 +50,15 @@ public class StudentImpl implements StudentRepo {
         String sql="insert into student values(?,?)";
         jdbcTemplate.update(sql,new Object[]{student.getId(),student.getName()});
         return "Data saved";
+    }
+
+    @Override
+    public List<Map<String,Object>> getCombinedData() {
+
+        String sql="select a.id,a.name as studentname,b.name as deptname from " +
+                "student a,dept b where a.deptId=b.id";
+        List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+        return list;
     }
 
 }

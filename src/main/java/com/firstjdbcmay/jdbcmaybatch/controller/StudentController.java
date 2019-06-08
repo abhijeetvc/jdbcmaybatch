@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class StudentController {
@@ -34,6 +35,11 @@ public class StudentController {
 
         String s=studentImpl.saveData(student);
         return s;
+    }
+
+    @GetMapping(value="/combinedata")
+    public List<Map<String,Object>> getData3(){
+        return studentImpl.getCombinedData();
     }
 
 }
